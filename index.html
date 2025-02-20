@@ -15,9 +15,16 @@
       button.textContent = `Player 1: ${name}`;
     }
 
+    function createParagraph() {
+      const para = document.createElement("p");
+      para.textContent = "You clicked the button!";
+      document.body.appendChild(para);
+    }
+
     const button = document.querySelector("button");
 
     button.addEventListener("click", updateName);
+    button.addEventListener("click", createParagraph);
   </script>
 </body>
 </html>
