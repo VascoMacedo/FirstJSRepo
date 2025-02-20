@@ -3,27 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
   <title>Document</title>
 </head>
-<body>
-  <button>Start machine</button>
-  <p>The machine is stopped.</p>
+<body>  
+  <button type="button">Player 1: Chris</button>
 
   <script>
-    const btn = document.querySelector("button");
-    const txt = document.querySelector("p");
-
-    btn.addEventListener("click", updateBtn);
-
-    function updateBtn() {
-      if (btn.textContent === "Start machine") {
-        btn.textContent = "Stop machine";
-        txt.textContent = "The machine has started!";
-      } else {
-        btn.textContent = "Start machine";
-        txt.textContent = "The machine is stopped.";
-      }
+    function updateName() {
+      const name = prompt("Enter a new name");
+      button.textContent = `Player 1: ${name}`;
     }
+
+    const button = document.querySelector("button");
+
+    button.addEventListener("click", updateName);
   </script>
 </body>
 </html>
