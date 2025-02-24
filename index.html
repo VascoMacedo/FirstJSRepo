@@ -1,54 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="index.css">
-  <title>Document</title>
-</head>
-<body>  
-  <label for="weather">Select the weather type today: </label>
-  <select id="weather">
-    <option value="">--Make a choice--</option>
-    <option value="sunny">Sunny</option>
-    <option value="rainy">Rainy</option>
-    <option value="snowing">Snowing</option>
-    <option value="overcast">Overcast</option>
-  </select>
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
 
-  <p></p>
+    <title>Number guessing game</title>
 
-
-  <script>
-    const select = document.querySelector("select");
-    const para = document.querySelector("p");
-
-    select.addEventListener("change", setWeather);
-
-    function setWeather() {
-      const choice = select.value;
-
-      switch (choice) {
-        case "sunny":
-          para.textContent =
-            "It is nice and sunny outside today. Wear shorts! Go to the beach, or the park, and get an ice cream.";
-          break;
-        case "rainy":
-          para.textContent =
-            "Rain is falling outside; take a rain coat and an umbrella, and don't stay out for too long.";
-          break;
-        case "snowing":
-          para.textContent =
-            "The snow is coming down — it is freezing! Best to stay in with a cup of hot chocolate, or go build a snowman.";
-          break;
-        case "overcast":
-          para.textContent =
-            "It isn't raining, but the sky is grey and gloomy; it could turn any minute, so take a rain coat just in case.";
-          break;
-        default:
-          para.textContent = "";
+    <style>
+      html {
+        font-family: sans-serif;
       }
-    }
-  </script>
-</body>
+      body {
+        width: 50%;
+        max-width: 800px;
+        min-width: 480px;
+        margin: 0 auto;
+      }
+      .lastResult {
+        color: white;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Number guessing game</h1>
+
+    <p>
+      We have selected a random number between 1 and 100. See if you can guess
+      it in 10 turns or less. We'll tell you if your guess was too high or too
+      low.
+    </p>
+
+    <div class="form">
+      <label for="guessField">Enter a guess: </label>
+      <input type="text" id="guessField" class="guessField" />
+      <input type="submit" value="Submit guess" class="guessSubmit" />
+    </div>
+
+    <div class="resultParas">
+      <p class="guesses"></p>
+      <p class="lastResult"></p>
+      <p class="lowOrHi"></p>
+    </div>
+
+    <script>
+      let randomNumber = Math.floor(Math.random()) + 1;
+
+      const guesses = document.querySelector(".guesses");
+      const lastResult = document.querySelector(".lastResult");
+      const lowOrHi = document.querySelector("lowOrHi");
+      const guessSubmit = document.querySelector(".guessSubmit");
+      const guessField = document.querySelector(".guessField");
+
+      let guessCount = 1;
+      let resetButton;
+
+      function checkGuess() {
+        const userGuess = Number(guessField.value);
+        if (guessCount === 1) {
+          guesses.textContent = "Previous guesses: ";
+        }
+        guesses.textContent += userGuess + " ";
+
+        if (userGuess === randomNumber) {
+          lastResult.textContent = "Congratulations! You got it right!";
+          lastResult.style.backgroundColor = "green";
+          lowOrHi.textContent = "";
+          setGameOver();
+        } else if (guessCount === 10) {
+          lastResult.textContent = "!!!GAME OVER!!!";
+          setGameOver();
+        } else {
+          lastResult.textContent = "Wrong!";
+          lastResult.style.backgroundColor = "red";
+          if (userGuess < randomNumber) {
+            lowOrHi.textContent = "Last guess was too low!";
+          } else if (userGuess > randomNumber) {
+            lowOrHi.textContent = "Last guess was too high!";
+          }
+        }
+
+        guessCount++;
+        guessField.value = "";
+        guessField.focus();
+      }
+      guessSubmit.addeventListener("click", checkGuess);
+
+      function setGameOver() {
+        guessField.disabled = true;
+        guessSubmit.disabled = true;
+        resetButton = document.createElement("button");
+        resetButton.textContent = "Start new game";
+        document.body.appendChild(resetButton);
+        resetButton.addeventListener("click", resetGame);
+      }
+
+      function resetGame() {
+        guessCount = 1;
+
+        const resetParas = document.querySelectorAll(".resultParas p");
+        for (const resetPara of resetParas) {
+          resetPara.textContent = "";
+        }
+        resetButton.parentNode.removeChild(resetButton);
+
+        guessField.disabled = false;
+        guessSubmit.disabled = false;
+        guessField.value = "";
+        guessField.focus();
+
+        lastResult.style.backgroundColor = "white";
+
+        randomNumber = Math.floor(Math.random()) + 1;
+      }
+    </script>
+  </body>
 </html>
