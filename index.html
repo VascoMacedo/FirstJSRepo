@@ -3,58 +3,42 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping list example</title>
-    <style>
-      li {
-        margin-bottom: 10px;
-      }
-
-      li button {
-        font-size: 12px;
-        margin-left: 20px;
-        color: #666;
-      }
-    </style>
+    <title>Simple DOM example</title>    
   </head>
   <body>
-
-    <h1>My shopping list</h1>
-
-    <div>
-      <label for="item">Enter a new item:</label>
-      <input type="text" name="item" id="item">
-      <button>Add item</button>
-    </div>
-
-    <ul>
-
-    </ul>
+    <section>
+      <img src="dinosaur.png" alt="A red Tyrannosaurus Rex: A two legged dinosaur standing upright like a human, with small arms, and a large head with lots of sharp teeth.">
+      <p>Here we will add a link to the <a href="https://www.mozilla.org/">Mozilla homepage</a></p>
+    </section>
 
     <script>
-      const list = document.querySelector('ul');
-      const input = document.querySelector('input');
-      const button = document.querySelector('button');
 
-      button.addEventListener('click', () => {
-        const myItem = input.value;
-        input.value = '';
+      const link = document.querySelector("a");
+      link.textContent = "Mozilla Developer Network";
+      link.href = "https://developer.mozilla.org";
 
-        const listItem = document.createElement('li');
-        const listText = document.createElement('span');
-        const listBtn = document.createElement('button');
 
-        listItem.appendChild(listText);
-        listText.textContent = myItem;
-        listItem.appendChild(listBtn);
-        listBtn.textContent = 'Delete';
-        list.appendChild(listItem);
+      const sect = document.querySelector("section");
+      
+      const para = document.createElement("p");
+      para.textContent = "We hope you enjoyed the ride.";
 
-        listBtn.addEventListener('click', () => {
-          list.removeChild(listItem);
-        });
+      sect.appendChild(para);
 
-        input.focus();
-      });
+      const text = document.createTextNode(" — the premier source for web development knowledge.",);
+
+      const linkPara = document.querySelector("p");
+      linkPara.appendChild(text);
+
+      sect.appendChild(linkPara);
+      sect.removeChild(linkPara);
+
+      para.style.color = "white";
+      para.style.backgroundColor = "black";
+      para.style.padding = "10px";
+      para.style.width = "250px";
+      para.style.textAlign = "center";
+
     </script>
   </body>
 </html>
