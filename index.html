@@ -32,32 +32,16 @@
 
     <script>
 
-      const uList = document.querySelector("ul");
-      const input = document.querySelector("input");
-      const button = document.querySelector("button");
-
-      button.addEventListener('click', () => {
-        const myItem = input.value;
-        input.value = "";
-
-        const listItem = document.createElement("li");
-        const span = document.createElement("span");
-        const listButton = document.createElement("button");
-
-        listItem.appendChild(span);
-        listItem.appendChild(listButton);
-
-        span.textContent = myItem;
-        listButton.textContent = "Delete";
-
-        uList.appendChild(listItem);
-
-        listButton.addEventListener('click', () => {
-          uList.removeChild(listItem);
-        })
-
-        input.focus();
-      })
+      const person = {
+        name: ["Bob", "Smith"],
+        age: 32,
+        bio: function () {
+          console.log(`${this.name[0]} ${this.name[1]} is ${this.age} years old.`);
+        },
+        introduceSelf: function () {
+          console.log(`Hi! I'm ${this.name[0]}.`);
+        },
+      };
 
     </script>
   </body>
